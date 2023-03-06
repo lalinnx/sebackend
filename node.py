@@ -2,6 +2,10 @@ class Choice(object):
     choice: list
     Ans: any
 
+    def __init__(self, c, a):
+        self.choice = c
+        self.Ans = a
+
     def __repr__(self):
         return self.choice + self.Ans
 
@@ -12,6 +16,12 @@ class Question:
     ran: bool
     choice: Choice
 
+    def __init__(self, n, q, r, c):
+        self.name = n
+        self.ques = q
+        self.ran = r
+        self.choice = c
+
     def __repr__(self):
         return self.name + self.ques + self.ran + self.choice
 
@@ -19,6 +29,10 @@ class Question:
 class Group:
     name: any
     Question: list
+
+    def __init__(self, n, q):
+        self.name =n
+        self.Question = q
 
     def __repr__(self):
         return self.name + self.Question
