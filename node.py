@@ -3,20 +3,22 @@ class Choice(object):
     Ans: any
 
     def __repr__(self):
-        return self.choice+self.Ans
+        return self.choice + self.Ans
 
-class Question():
+
+class Question:
     name: any
     ques: any
     ran: bool
     choice: Choice
 
     def __repr__(self):
-        return self.name+self.ques+self.ran+self.choice
+        return self.name + self.ques + self.ran + self.choice
 
-class Group():
+
+class Group:
     name: any
     Question: list
 
     def __repr__(self):
-        return self.name+self.Question
+        return self.name + self.Question
