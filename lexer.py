@@ -53,7 +53,7 @@ class Lexer:
         char_str = self.current_char
         self.advance()
 
-        while self.current_char in CHAR:
+        while self.current_char is not None and self.current_char in CHAR:
             char_str += self.current_char
             self.advance()
 

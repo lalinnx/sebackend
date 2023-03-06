@@ -26,12 +26,11 @@ class Parser:
         while self.current_token is not None:
             if self.current_token.type in TokenType.CHAR:
                 if self.current_token.value == "G":
-                    result = self.parseGroup()
+                    return self.parseGroup()
                 elif self.current_token.value == "Q":
-                    result = self.parseQuestion()
+                    return self.parseQuestion()
             else:
                 self.raise_error()
-        return result
 
     def parseGroup(self):
         self.checktype(TokenType.LEFTCURLY)
