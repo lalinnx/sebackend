@@ -5,6 +5,7 @@ from node import Choice, Question, Group
 class Parser:
 
     def __init__(self, tokens):
+        self.current_token = None
         self.tokens = iter(tokens)
         self.advance()
 
@@ -87,9 +88,9 @@ class Parser:
         return Choice(choice, ans)
 
     def parseName(self):
-        text = self.current_token
+        text = self.current_token.value
         self.advance()
         while self.current_token is not None and self.current_token.type in (TokenType.CHAR, TokenType.NUMBER):
-            text += self.current_token
+            text += self.current_token.value
             self.advance()
         return text
