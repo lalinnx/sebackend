@@ -15,6 +15,8 @@ class Parser:
     def checktype(self, T):
         if self.current_token is not None and self.current_token.type == T:
             self.advance()
+        else:
+            raise ValueError("Illegal argument:", self.current_token)
 
     def advance(self):
         try:
@@ -22,31 +24,42 @@ class Parser:
         except StopIteration:
             self.current_token = None
 
+    # def doIterate(self):
+    #     while self.current_token is not None:
+
     def parse(self):
         while self.current_token is not None:
+            print('current token:', self.current_token)
             if self.current_token.type == TokenType.CHAR:
                 if self.current_token.value == "G":
-                    return self.parseGroup()
+                    self.advance()
+                    yield self.parseGroup()
                 elif self.current_token.value == "Q":
-                    return self.parseQuestion()
+                    yield self.parseQuestion()
             else:
                 self.raise_error()
 
     def parseGroup(self):
+        print('current token:', self.current_token)
         self.checktype(TokenType.LEFTCURLY)
+
         name = self.parseName()
-        self.checktype(TokenType.LEFTSQUARE)
-        self.advance()
+        print('current token:', self.current_token)
+        self.checktype(TokenType.RIGHTCURLY)
 
         question = []
         i = 0
-
+        print('current token:', self.current_token)
+        self.checktype(TokenType.LEFTSQUARE)
+        print('current token:', self.current_token)
         while self.current_token is not None:
             if self.current_token.value == "Q":
+                self.advance()
                 question[i] = self.parseQuestion()
                 i += 1
                 self.advance()
             if self.current_token.type == TokenType.RIGHTAQUARE: break
+        print('current token:', self.current_token)
 
         return Group(name, question)
 
@@ -91,6 +104,6 @@ class Parser:
         text = self.current_token.value
         self.advance()
         while self.current_token is not None and self.current_token.type in (TokenType.CHAR, TokenType.NUMBER):
-            text += self.current_token.value
+            text += str(self.current_token.value)
             self.advance()
         return text
