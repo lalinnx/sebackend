@@ -28,19 +28,22 @@ class Parser:
     #     while self.current_token is not None:
 
     def parse(self):
+        result = []
         while self.current_token is not None:
-            print('current token:', self.current_token)
+            print('parse current token:', self.current_token)
             if self.current_token.type == TokenType.CHAR:
                 if self.current_token.value == "G":
                     self.advance()
-                    yield self.parseGroup()
+                    result.append(self.parseGroup())
                 elif self.current_token.value == "Q":
-                    yield self.parseQuestion()
+                    result =  self.parseQuestion()
             else:
                 self.raise_error()
 
+        return result
+
     def parseGroup(self):
-        print('current token:', self.current_token)
+        print('group current token:', self.current_token)
         self.checktype(TokenType.LEFTCURLY)
 
         name = self.parseName()
@@ -55,7 +58,9 @@ class Parser:
             if self.current_token.value == "Q":
                 self.advance()
                 question.append(self.parseQuestion())
-        print('current token:', self.current_token)
+            if self.current_token.value == "G": break
+
+        print('end group current token:', self.current_token)
 
         return Group(name, question)
 
@@ -68,7 +73,7 @@ class Parser:
         self.checktype(TokenType.QUESTION)
         self.checktype(TokenType.RIGHTCURLY)
         self.checktype(TokenType.COMMA)
-        print('current token:', self.current_token)
+        print('question current token:', self.current_token)
         # self.checktype(TokenType.CHAR)
         random = False
         if self.current_token.value == "rand":
@@ -84,7 +89,7 @@ class Parser:
 
     def parseChoice(self):
         ans = ''
-        print('current token:', self.current_token)
+        print('choice current token:', self.current_token)
         self.checktype(TokenType.LEFTSQUARE)
         print('current token:', self.current_token)
         self.advance()
@@ -94,20 +99,23 @@ class Parser:
         while self.current_token is not TokenType.RIGHTSQUARE:
             print("nejfwefiuweifihfifief")
             self.checktype(TokenType.LEFTCURLY)
-            print('current token:', self.current_token)
+            print('1current token:', self.current_token)
             current_choice = self.parseName()
             choice.append(current_choice)
             self.checktype(TokenType.RIGHTCURLY)
-            print('current token:', self.current_token)
+            print('2current token:', self.current_token)
+            if self.current_token.type == TokenType.RIGHTSQUARE:
+                break
             if self.current_token.type == TokenType.ANSWER:
                 ans = current_choice
                 self.advance()
             self.advance()
-            print('current token:', self.current_token)
+            print('3current token:', self.current_token)
             if self.current_token.type == TokenType.RIGHTSQUARE:
                 break
+
         self.checktype(TokenType.RIGHTSQUARE)
-        print('current token:', self.current_token)
+        print('end choice current token:', self.current_token)
 
         return Choice(choice, ans)
 
