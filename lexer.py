@@ -36,7 +36,7 @@ class Lexer:
                 yield Token(TokenType.LEFTSQUARE)
             elif self.current_char == ']':
                 self.advance()
-                yield Token(TokenType.RIGHTAQUARE)
+                yield Token(TokenType.RIGHTSQUARE)
             elif self.current_char == '{':
                 self.advance()
                 yield Token(TokenType.LEFTCURLY)

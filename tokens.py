@@ -9,7 +9,7 @@ class TokenType(Enum):
     QUESTION = 3
     ANSWER = 4
     LEFTSQUARE = 5
-    RIGHTAQUARE = 6
+    RIGHTSQUARE = 6
     LEFTCURLY = 7
     RIGHTCURLY = 8
 
