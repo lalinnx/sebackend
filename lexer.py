@@ -2,7 +2,7 @@ from tokens import Token, TokenType
 
 WHITESPACE = ' \n\t '
 NUMBER = '0123456789'
-CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '
+CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz? '
 
 
 class Lexer:
@@ -28,21 +28,18 @@ class Lexer:
             elif self.current_char == ',':
                 self.advance()
                 yield Token(TokenType.COMMA)
-            elif self.current_char == '?':
+            elif self.current_char == '/':
                 self.advance()
-                yield Token(TokenType.QUESTION)
+                yield Token(TokenType.SLASH)
             elif self.current_char == '[':
                 self.advance()
                 yield Token(TokenType.LEFTSQUARE)
             elif self.current_char == ']':
                 self.advance()
                 yield Token(TokenType.RIGHTSQUARE)
-            elif self.current_char == '{':
+            elif self.current_char == '-':
                 self.advance()
-                yield Token(TokenType.LEFTCURLY)
-            elif self.current_char == '}':
-                self.advance()
-                yield Token(TokenType.RIGHTCURLY)
+                yield Token(TokenType.HYPHEN)
             elif self.current_char == '=':
                 self.advance()
                 yield Token(TokenType.ANSWER)

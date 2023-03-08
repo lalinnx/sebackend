@@ -6,12 +6,11 @@ class TokenType(Enum):
     CHAR = 0
     NUMBER = 1
     COMMA = 2
-    QUESTION = 3
+    SLASH = 3
     ANSWER = 4
     LEFTSQUARE = 5
     RIGHTSQUARE = 6
-    LEFTCURLY = 7
-    RIGHTCURLY = 8
+    HYPHEN = 7
 
 
 @dataclass

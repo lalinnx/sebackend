@@ -24,9 +24,6 @@ class Parser:
         except StopIteration:
             self.current_token = None
 
-    # def doIterate(self):
-    #     while self.current_token is not None:
-
     def parse(self):
         result = []
         while self.current_token is not None:
@@ -36,7 +33,7 @@ class Parser:
                     self.advance()
                     result.append(self.parseGroup())
                 elif self.current_token.value == "Q":
-                    result =  self.parseQuestion()
+                    result = self.parseQuestion()
             else:
                 self.raise_error()
 
@@ -44,34 +41,38 @@ class Parser:
 
     def parseGroup(self):
         print('group current token:', self.current_token)
-        self.checktype(TokenType.LEFTCURLY)
-
+        self.checktype(TokenType.HYPHEN)
         name = self.parseName()
-        print('current token:', self.current_token)
-        self.checktype(TokenType.RIGHTCURLY)
+        print('group current token:', name)
+        self.checktype(TokenType.COMMA)
 
         question = []
-        print('current token:', self.current_token)
-        self.checktype(TokenType.LEFTSQUARE)
-        print('current token:', self.current_token)
         while self.current_token is not None:
             if self.current_token.value == "Q":
+                print('group current token:', self.current_token)
                 self.advance()
+                self.checktype(TokenType.HYPHEN)
                 question.append(self.parseQuestion())
-            if self.current_token.value == "G": break
-
-        print('end group current token:', self.current_token)
+            elif self.current_token is None:
+                break
+            else:
+                x = self.parseName()
+                if x == "end":
+                    if self.current_token is None:
+                        break
+                    if self.current_token.type == TokenType.COMMA:
+                        self.checktype(TokenType.COMMA)
+                        break
+        print('end group')
 
         return Group(name, question)
 
     def parseQuestion(self):
-        self.checktype(TokenType.LEFTCURLY)
         name = self.parseName()
+        print('current token:', name)
         self.checktype(TokenType.COMMA)
-        self.checktype(TokenType.CHAR)
-        ques = self.parseName
-        self.checktype(TokenType.QUESTION)
-        self.checktype(TokenType.RIGHTCURLY)
+        ques = self.parseName()
+        print('current token:', ques)
         self.checktype(TokenType.COMMA)
         print('question current token:', self.current_token)
         # self.checktype(TokenType.CHAR)
@@ -92,35 +93,28 @@ class Parser:
         print('choice current token:', self.current_token)
         self.checktype(TokenType.LEFTSQUARE)
         print('current token:', self.current_token)
-        self.advance()
-        current_choice = 0
         choice = []
 
         while self.current_token is not TokenType.RIGHTSQUARE:
-            print("nejfwefiuweifihfifief")
-            self.checktype(TokenType.LEFTCURLY)
-            print('1current token:', self.current_token)
+            self.checktype(TokenType.SLASH)
             current_choice = self.parseName()
             choice.append(current_choice)
-            self.checktype(TokenType.RIGHTCURLY)
-            print('2current token:', self.current_token)
-            if self.current_token.type == TokenType.RIGHTSQUARE:
-                break
+            print('current token:', current_choice)
             if self.current_token.type == TokenType.ANSWER:
                 ans = current_choice
                 self.advance()
-            self.advance()
-            print('3current token:', self.current_token)
-            if self.current_token.type == TokenType.RIGHTSQUARE:
-                break
 
-        self.checktype(TokenType.RIGHTSQUARE)
-        print('end choice current token:', self.current_token)
+            if self.current_token.type == TokenType.RIGHTSQUARE:
+                self.advance()
+                break
+            print('current token::', self.current_token)
+
+        print('end choice current token::', self.current_token)
 
         return Choice(choice, ans)
 
     def parseName(self):
-        text = self.current_token.value
+        text = str(self.current_token.value)
         self.advance()
         while self.current_token is not None and self.current_token.type in (TokenType.CHAR, TokenType.NUMBER):
             text += str(self.current_token.value)

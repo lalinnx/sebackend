@@ -6,8 +6,9 @@ class Choice(object):
         self.choice = c
         self.Ans = a
 
-    def __repr__(self):
-        return str(self.choice), self.Ans
+    # def __repr__(self):
+    #     return str(self.choice), self.Ans
+
 
 class Question:
     name: any
@@ -21,8 +22,8 @@ class Question:
         self.ran = r
         self.choice = c
 
-    def __repr__(self):
-        return self.name + self.ques + self.ran + str(self.choice)
+    # def __repr__(self):
+    #     return self.name + self.ques + self.ran + str(self.choice)
 
 
 class Group:
@@ -33,6 +34,6 @@ class Group:
         self.name = n
         self.Question = q
 
-    def __repr__(self):
-        rep = str(self.name) + ',' + str(self.Question) + ')'
-        return rep
+    # def __repr__(self):
+    #     rep = str(self.name) + ',' + str(self.Question) + ')'
+    #     return rep

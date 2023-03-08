@@ -1,8 +1,26 @@
 from lexer import Lexer
 from parser_ import Parser
 
-lexer = Lexer("G{type1}[Q{question1.1,what is dog?},rand[C{choice1}C{choice2}=C{choice3}C{choice4}]Q{question1.2,what is cat?},rand[C{choice1}{choice2}C{choice3}=C{choice4}]G{type2}[Q{question2.1, what is game?},norand[C{choice1}=C{choice2}C{choice3}C{choice4}]Q{question3, what is what?},rand[C{choice1}C{choice2}=C{choice3}C{choice4}]")
-parser = Parser(lexer.generate_tokens())
+lexer1 = Lexer("G-1,Q-1A,what is dog?,rand[/cat/dog=/you/me]Q-1B,what is cat?,rand[/you/cat/dog=/tiger]end,G-2,Q-2A,meal with?,norand[/dog=/cat/you/tiger]Q-2B,illegel to eat cat?,rand[/no/yes=]end")
+parser = Parser(lexer1.generate_tokens())
 tree = parser.parse()
-print(list(tree))
+
+print()
+print()
+for g in tree:
+    print("=====================")
+    print("Group:", g.name)
+    print("------------------")
+    qlist = g.Question
+    for q in qlist:
+        print(q.name)
+        print(q.ques)
+        print("rand: ", q.ran)
+        ch = q.choice.choice
+        for i in ch:
+            if i == q.choice.Ans:
+                print("answer choice: ", i)
+            else:
+                print("choice: ", i)
+        print("------------------")
 
