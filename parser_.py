@@ -96,7 +96,8 @@ class Parser:
         choice = []
 
         while self.current_token is not TokenType.RIGHTSQUARE:
-            self.checktype(TokenType.SLASH)
+            self.checktype(TokenType.ASTERISK)
+            self.checktype(TokenType.ASTERISK)
             current_choice = self.parseName()
             choice.append(current_choice)
             print('current token:', current_choice)

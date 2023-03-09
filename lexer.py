@@ -29,9 +29,9 @@ class Lexer:
             elif self.current_char == ',':
                 self.advance()
                 yield Token(TokenType.COMMA)
-            elif self.current_char == '/':
+            elif self.current_char == '*':
                 self.advance()
-                yield Token(TokenType.SLASH)
+                yield Token(TokenType.ASTERISK)
             elif self.current_char == '[':
                 self.advance()
                 yield Token(TokenType.LEFTSQUARE)
@@ -76,4 +76,4 @@ class Lexer:
         if number_str.endswith('.'):
             number_str += '0'
 
-        return Token(TokenType.NUMBER, float(number_str))
+        return Token(TokenType.NUMBER, int(number_str))

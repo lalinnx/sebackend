@@ -6,7 +6,7 @@ class TokenType(Enum):
     CHAR = 0
     NUMBER = 1
     COMMA = 2
-    SLASH = 3
+    ASTERISK = 3
     ANSWER = 4
     LEFTSQUARE = 5
     RIGHTSQUARE = 6
