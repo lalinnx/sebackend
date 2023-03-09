@@ -1,9 +1,10 @@
 from tokens import Token, TokenType
+import re
 
 WHITESPACE = ' \n\t '
 NUMBER = '0123456789'
 CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz? '
-
+thai_pattern = re.compile("[\u0E00-\u0E7F]+")
 
 class Lexer:
     def __init__(self, text):
@@ -23,7 +24,7 @@ class Lexer:
                 self.advance()
             elif self.current_char == '.' or self.current_char in NUMBER:
                 yield self.generate_number()
-            elif self.current_char in CHAR:
+            elif self.current_char in CHAR or thai_pattern.search(self.current_char):
                 yield self.generate_char()
             elif self.current_char == ',':
                 self.advance()
@@ -47,11 +48,11 @@ class Lexer:
                 raise Exception(f"Illegal character '{self.current_char}'")
 
     def generate_char(self):
-        char_str = self.current_char
+        char_str = self.current_char.encode('utf-8').decode('utf-8')
         self.advance()
 
-        while self.current_char is not None and self.current_char in CHAR:
-            char_str += self.current_char
+        while self.current_char is not None and (self.current_char in CHAR or thai_pattern.search(self.current_char)):
+            char_str += self.current_char.encode('utf-8').decode('utf-8')
             self.advance()
 
         return Token(TokenType.CHAR, char_str)

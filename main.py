@@ -1,8 +1,13 @@
 from lexer import Lexer
 from parser_ import Parser
+import io
+import sys
+
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 lexer1 = Lexer("G-1,Q-1A,what is dog?,rand[/cat/dog=/you/me]Q-1B,what is cat?,rand[/you/cat/dog=/tiger]end,G-2,Q-2A,meal with?,norand[/dog=/cat/you/tiger]Q-2B,illegel to eat cat?,rand[/no/yes=]end")
-parser = Parser(lexer1.generate_tokens())
+lexer2 = Lexer("G-1,Q-1A,หมาคืออะไร?,rand[/แมว/หมา=/จิ้งจก/เธอ]Q-1B,แมวคืออะไร?,rand[/เธอ/แมว/หมา=/เสือ]end")
+parser = Parser(lexer2.generate_tokens())
 tree = parser.parse()
 
 print()
