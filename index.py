@@ -26,6 +26,7 @@ def wrong_params(error):
     return "<h1> wrong param in document check your file's extension</h1>"
 
 def Do_parser(quiztext):
+        quizgroup,quizquestion = ([],[])
         lexer1 = Lexer(quiztext)
         parser = Parser(lexer1.generate_tokens())
         tree = parser.parse()
@@ -45,6 +46,7 @@ def Do_parser(quiztext):
                     else:
                         print("choice: ", i)
                 print("------------------")
+        return quizgroup,quizquestion
 
 @app.route('/')
 def hello():
