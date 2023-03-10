@@ -21,8 +21,8 @@ class readDoc:
 
             elif (self.fileType == "doc"):
                 print("this is doc")
-
-                return result
+            elif (self.fileType == "pdf"):
+                print("this is pdf")
+            return result
         except Exception as e:
             return "These're somethings wrong with "+str(e)
-        return result
