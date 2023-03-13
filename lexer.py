@@ -4,8 +4,9 @@ import re
 WHITESPACE = ' \n\t '
 NUMBER = ' 0123456789 '
 CHAR = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz? '
-NAMECHAR = ' +-*/%"$#@!?.,{}()_<>=^&|:;\ '+"'"
+NAMECHAR = ' +-*/%"$#@!?.{}()_<>=^&|:;\ ' + "'"
 thai_pattern = re.compile("[\u0E00-\u0E7F]+")
+
 
 class Lexer:
     def __init__(self, text):
@@ -59,12 +60,13 @@ class Lexer:
             self.advance()
 
         return Token(TokenType.CHAR, char_str)
-    
+
     def generate_namechar(self):
         char_str = self.current_char.encode('utf-8').decode('utf-8')
         self.advance()
 
-        while self.current_char is not None and (self.current_char in CHAR or self.current_char in NAMECHAR or thai_pattern.search(self.current_char)):
+        while self.current_char is not None and (
+                self.current_char in CHAR or self.current_char in NAMECHAR or thai_pattern.search(self.current_char)):
             char_str += self.current_char.encode('utf-8').decode('utf-8')
             self.advance()
 
@@ -74,6 +76,7 @@ class Lexer:
         decimal_point_count = 0
         number_str = self.current_char
         self.advance()
+        final_number = 0
 
         while self.current_char is not None and (self.current_char == '.' or self.current_char in NUMBER):
             if self.current_char == '.':
@@ -83,10 +86,9 @@ class Lexer:
 
             number_str += self.current_char
             self.advance()
+        if decimal_point_count >= 1:
+            final_number = float(number_str)
+        else:
+            final_number = int(number_str)
 
-        if number_str.startswith('.'):
-            number_str = '0' + number_str
-        if number_str.endswith('.'):
-            number_str += '0'
-
-        return Token(TokenType.NUMBER, int(number_str))
+        return Token(TokenType.NUMBER, final_number)

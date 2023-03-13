@@ -13,12 +13,16 @@ class Choice(object):
 class Question:
     name: any
     ques: any
+    rand = any
     choice: Choice
+    point: float()
 
-    def __init__(self, n, q, c):
+    def __init__(self, n, q, r, c, p):
         self.name = n
         self.ques = q
+        self.rand = r
         self.choice = c
+        self.point = p
 
     # def __repr__(self):
     #     return self.name + self.ques + self.ran + str(self.choice)
@@ -27,12 +31,10 @@ class Question:
 class Group:
     name: any
     Question: list
-    Point : float()
 
-    def __init__(self, n, q, p):
+    def __init__(self, n, q):
         self.name = n
         self.Question = q
-        self.Point = p
 
     # def __repr__(self):
     #     rep = str(self.name) + ',' + str(self.Question) + ')'

@@ -9,14 +9,14 @@ class QuizGroupObject:
                      groupName: str,  # The name of the question group.
                      # The number of questions to pick from the group to display to the student.
                      pickCount: int,
-                     # The amount of points allotted to each question in the group.
-                     questionPoints: int,
+                     # # The amount of points allotted to each question in the group.
+                     # questionPoints: int,
                     
                      ) -> None:
         self.QuizGroup.append({
             "name": groupName,
             "pick_count": pickCount,
-            "question_points": questionPoints,
+            # "question_points": questionPoints,
         })
     def getQuizGroup(self)->list:
         return self.QuizGroup

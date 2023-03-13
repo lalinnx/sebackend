@@ -12,6 +12,9 @@ class Parser:
     def raise_error(self):
         raise Exception("Invalid syntax")
 
+    def raise_noPoint_error(self, x):
+        raise Exception(x)
+
     def checktype(self, T):
         if self.current_token is not None and self.current_token.type == T:
             self.advance()
@@ -28,12 +31,16 @@ class Parser:
         result = []
         while self.current_token is not None:
             print('parse current token:', self.current_token)
-            if self.current_token.type == TokenType.CHAR:
-                if self.current_token.value == "G":
-                    self.advance()
-                    result.append(self.parseGroup())
-                elif self.current_token.value == "Q":
-                    result = self.parseQuestion()
+            if self.current_token.value == "G":
+                self.advance()
+                result.append(self.parseGroup())
+            elif self.current_token.value == "Q":
+                self.advance()
+                result.append(self.parseQuestion(0))
+                if self.current_token is None:
+                    break
+                else:
+                    self.checktype(TokenType.COMMA)
             else:
                 self.raise_error()
 
@@ -41,11 +48,12 @@ class Parser:
 
     def parseGroup(self):
         point = 0.0
-        print('group current token:', self.current_token)
+        print('group current tokern:', self.current_token)
         self.checktype(TokenType.HYPHEN)
         name = self.parseName()
         print('group current token:', name)
         self.checktype(TokenType.COMMA)
+        print('group current token:', self.current_token)
         if self.current_token.value == "P":
             self.advance()
             self.checktype(TokenType.HYPHEN)
@@ -54,14 +62,12 @@ class Parser:
         else:
             self.raise_error()
 
-
         question = []
         while self.current_token is not None:
             if self.current_token.value == "Q":
                 print('group current token:', self.current_token)
                 self.advance()
-                self.checktype(TokenType.HYPHEN)
-                question.append(self.parseQuestion())
+                question.append(self.parseQuestion(point))
             elif self.current_token is None:
                 break
             else:
@@ -74,12 +80,22 @@ class Parser:
                         break
         print('end group')
 
-        return Group(name, question, point)
+        return Group(name, question)
 
-    def parseQuestion(self):
+    def parseQuestion(self, point):
+        self.checktype(TokenType.HYPHEN)
         name = self.parseName()
         print('current token:', name)
         self.checktype(TokenType.COMMA)
+        if self.current_token.value == "P":
+            self.advance()
+            self.checktype(TokenType.HYPHEN)
+            point = self.parseName()
+            self.checktype(TokenType.COMMA)
+        print(float(point))
+        if float(point) == 0.0:
+            str1 = "No point for question:" + str(name)
+            self.raise_noPoint_error(str1)
         ques = self.parseName()
         print('current token:', ques)
         self.checktype(TokenType.COMMA)
@@ -95,7 +111,7 @@ class Parser:
         self.advance()
         choice = self.parseChoice()
 
-        return Question(name, ques, random, choice)
+        return Question(name, ques, random, choice, point)
 
     def parseChoice(self):
         ans = ''
