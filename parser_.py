@@ -33,7 +33,12 @@ class Parser:
                     self.advance()
                     result.append(self.parseGroup())
                 elif self.current_token.value == "Q":
-                    result = self.parseQuestion()
+                    self.advance()
+                    result.append(self.parseQuestion())
+                    if self.current_token is None:
+                        break
+                    else:
+                        self.checktype(TokenType.COMMA)
             else:
                 self.raise_error()
 
@@ -51,7 +56,6 @@ class Parser:
             if self.current_token.value == "Q":
                 print('group current token:', self.current_token)
                 self.advance()
-                self.checktype(TokenType.HYPHEN)
                 question.append(self.parseQuestion())
             elif self.current_token is None:
                 break
@@ -68,6 +72,7 @@ class Parser:
         return Group(name, question)
 
     def parseQuestion(self):
+        self.checktype(TokenType.HYPHEN)
         name = self.parseName()
         print('current token:', name)
         self.checktype(TokenType.COMMA)
