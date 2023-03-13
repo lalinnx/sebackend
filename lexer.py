@@ -2,8 +2,9 @@ from tokens import Token, TokenType
 import re
 
 WHITESPACE = ' \n\t '
-NUMBER = '0123456789'
-CHAR = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz? '
+NUMBER = ' 0123456789 '
+CHAR = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz? '
+NAMECHAR = ' +-*/%"$#@!?.,{}()_<>=^&|:;\ '+"'"
 thai_pattern = re.compile("[\u0E00-\u0E7F]+")
 
 class Lexer:
@@ -44,6 +45,8 @@ class Lexer:
             elif self.current_char == '=':
                 self.advance()
                 yield Token(TokenType.ANSWER)
+            elif self.current_char in NAMECHAR:
+                yield self.generate_namechar()
             else:
                 raise Exception(f"Illegal character '{self.current_char}'")
 
@@ -52,6 +55,16 @@ class Lexer:
         self.advance()
 
         while self.current_char is not None and (self.current_char in CHAR or thai_pattern.search(self.current_char)):
+            char_str += self.current_char.encode('utf-8').decode('utf-8')
+            self.advance()
+
+        return Token(TokenType.CHAR, char_str)
+    
+    def generate_namechar(self):
+        char_str = self.current_char.encode('utf-8').decode('utf-8')
+        self.advance()
+
+        while self.current_char is not None and (self.current_char in CHAR or self.current_char in NAMECHAR or thai_pattern.search(self.current_char)):
             char_str += self.current_char.encode('utf-8').decode('utf-8')
             self.advance()
 
