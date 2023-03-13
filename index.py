@@ -145,10 +145,6 @@ def upload_file():
     return jsonify(f"Uploading file {file.filename} 'author':{author},'category':{category},'createDate':{createdate},'status':{status},'qData':{quizgroup} ")
 
 
-@app.route('/api/update', methods=['PUT'])
-def update_quiz():
-    return
-
 
 app.register_error_handler(404, no_page)
 app.register_error_handler(400, no_page)
