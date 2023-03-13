@@ -13,13 +13,11 @@ class Choice(object):
 class Question:
     name: any
     ques: any
-    ran: bool
     choice: Choice
 
-    def __init__(self, n, q, r, c):
+    def __init__(self, n, q, c):
         self.name = n
         self.ques = q
-        self.ran = r
         self.choice = c
 
     # def __repr__(self):
