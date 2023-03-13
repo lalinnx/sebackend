@@ -26,9 +26,8 @@ def parse_quiz(quiz_text):
         # Add the quiz group object to the prepared_quizGroup
         quiz_group.addQuizGroup(
             groupName=group.name,
-            pickCount=len(question_list),
-            questionPoints=1,
-            assessmentID=1
+            pickCount=1,
+            questionPoints=1
         )
 
         # Loop through each question in the group

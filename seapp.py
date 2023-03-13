@@ -25,9 +25,6 @@ def wrong_params(error):
     return "<h1> wrong param in document check your file's extension</h1>"
 
 
-
-
-
 @app.route('/')
 def hello():
     return {"message": "index page"}, 201
@@ -82,7 +79,6 @@ def upload_file():
 
     # return jsonify(f"Uploading file {file.filename}")
     return jsonify(f"Uploading file {file.filename} 'author':{author},'category':{category},'createDate':{createdate},'status':{status},'qData':{quizgroup} ")
-
 
 
 app.register_error_handler(404, no_page)

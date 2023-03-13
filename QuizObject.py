@@ -11,14 +11,12 @@ class QuizGroupObject:
                      pickCount: int,
                      # The amount of points allotted to each question in the group.
                      questionPoints: int,
-                     # The id of the assessment question bank to pull questions from.
-                     assessmentID: int
+                    
                      ) -> None:
         self.QuizGroup.append({
             "name": groupName,
             "pick_count": pickCount,
             "question_points": questionPoints,
-            "assessment_question_bank_id": assessmentID
         })
     def getQuizGroup(self)->list:
         return self.QuizGroup
