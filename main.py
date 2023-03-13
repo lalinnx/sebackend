@@ -41,7 +41,7 @@ def questionMethod(q, group_id):
         quiz_group_id=group_id,
         question_type="multiple_choice_question",
         position=1,
-        points_possible=1,
+        points_possible=q.point,
         correct_comments="",
         incorrect_comments="",
         neutral_comments="",
