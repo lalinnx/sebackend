@@ -2,7 +2,7 @@ from ParseQuiz import parse_quiz
 import json
 from datetime import datetime
 from ReadDocx import readDoc
-from flask import Flask, request, jsonify
+from flask import Flask, make_response, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
 from bson import json_util
@@ -11,6 +11,7 @@ ALLOWED_EXTENSIONS = ('doc', 'docx')
 
 
 app = Flask(__name__)
+app.config['JSON_AS_ASCII'] = False
 client = MongoClient(
     'mongodb+srv://work21123:0881496697_Zaa@lmsquizimporter.897habv.mongodb.net/?retryWrites=true&w=majority')
 db = client['lmsquiz']
@@ -72,13 +73,12 @@ def upload_file():
         quiz_text = readDoc(file=file, fileType=fileType).getText()
         quizgroup = parse_quiz(quiz_text=quiz_text)
         quizdataTable.insert_one({'author': author, 'category': category,
-                                 'createDate': createdate, 'qData': json.dumps(quizgroup), 'status': status})
+                                 'createDate': createdate, 'qData': quizgroup, 'status': status})
 
     except Exception as e:
         return f"Couldn't upload file {e}"
 
-    # return jsonify(f"Uploading file {file.filename}")
-    return jsonify(f"Uploading file {file.filename} 'author':{author},'category':{category},'createDate':{createdate},'status':{status},'qData':{quizgroup} ")
+    return make_response(jsonify({'author': author, 'category': category, 'createDate': createdate, 'status': status, 'qData': quizgroup}),200)
 
 
 app.register_error_handler(404, no_page)

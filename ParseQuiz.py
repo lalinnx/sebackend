@@ -1,4 +1,4 @@
-from QuizObject import Answer, QuizGroupObject, QuizQuestionObject
+from QuizObject import QuizGroupObject, QuizQuestionObject
 from lexer import Lexer
 from parser_ import Parser
 
@@ -16,49 +16,56 @@ def parse_quiz(quiz_text):
     # Prepare the quiz group and question objects
     quiz_group = QuizGroupObject()
     quiz_question = QuizQuestionObject()
-    group_id = 0
+    order_id = 0
 
     # Loop through each group in the parse tree
     for group in parse_tree:
-        group_id += 1
+        order_id += 1
+        
         question_list = group.Question
-
-        # Add the quiz group object to the prepared_quizGroup
-        quiz_group.addQuizGroup(
-            groupName=group.name,
-            pickCount=1,
-            questionPoints=1
-        )
+        if (group.name != None):
+            # Add the quiz group object to the prepared_quizGroup
+            quiz_group.addQuizGroup(
+                groupName=group.name,
+                pickCount=len(question_list),
+                questionPoints=1
+            )
 
         # Loop through each question in the group
         for question in question_list:
+            count = 0
             choices = question.choice.choice
-            prepared_answer = Answer()
-
+            preparedQuizQuestion = {}
+            print(str(question))
+            # The name of the question.
+            preparedQuizQuestion['question[question_name]'] = 'Question {}'.format(order_id)
+            # The text of the question.
+            preparedQuizQuestion['question[question_text]'] = question.name
+            if (group.name != None):
+                # The id of the quiz group to assign the question to.
+                preparedQuizQuestion['question[quiz_group_id]'] = 0
+                # Because we dont know the group id, we need to check with the name of group name.
+                preparedQuizQuestion['group_belong_to'] = group.name
+            # The type of question. Multiple optional fields depend upon the type of question to be used.
+            # always multiple_choice_question
+            preparedQuizQuestion['question[question_type]'] = 'multiple_choice_question'
+            # The maximum amount of points possible received for getting this question correct.
+            preparedQuizQuestion['question[points_possible]'] = 1
             # Loop through each choice in the question
             for choice in choices:
                 if choice == question.choice.Ans:
                     print("answer choice: ", choice)
-                    prepared_answer.addAnswer(
-                        answer_text=choice, answer_weight=100)
+                    preparedQuizQuestion[f'question[answers][{count}][answer_text]'] = choice
+                    preparedQuizQuestion[f'question[answers][{count}][answer_weight]'] = 100
                 else:
                     print("choice: ", choice)
-                    prepared_answer.addAnswer(
-                        answer_text=choice, answer_weight=0)
+                    preparedQuizQuestion[f'question[answers][{count}][answer_text]'] = choice
+                    preparedQuizQuestion[f'question[answers][{count}][answer_weight]'] = 0
+                count += 1
 
             # Add the quiz question object to the prepared_quizQuestion
             quiz_question.addQuizQuestion(
-                question_name="Question"+str(group_id),
-                question_text=question.name,
-                quiz_group_id=group_id,
-                question_type="multiple_choice_question",
-                position=1,
-                points_possible=1,
-                correct_comments="",
-                incorrect_comments="",
-                neutral_comments="",
-                text_after_answers="",
-                answers=prepared_answer.getAnswer()
+                preparedQuizQuestion=preparedQuizQuestion
             )
 
-    return quiz_group.getQuizGroup(), quiz_question.getQuizQuestion()
+    return {"quiz_groups": quiz_group.getQuizGroup(), "quiz_questions": quiz_question.getQuizQuestion()}
