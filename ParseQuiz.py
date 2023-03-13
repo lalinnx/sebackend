@@ -59,7 +59,7 @@ def parse_quiz(quiz_text):
                 incorrect_comments="",
                 neutral_comments="",
                 text_after_answers="",
-                answers=prepared_answer.getAnswers()
+                answers=prepared_answer.getAnswer()
             )
 
     return quiz_group.getQuizGroup(), quiz_question.getQuizQuestion()
