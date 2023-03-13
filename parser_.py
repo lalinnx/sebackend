@@ -33,29 +33,34 @@ class Parser:
                     self.advance()
                     result.append(self.parseGroup())
                 elif self.current_token.value == "Q":
-                    self.advance()
-                    result.append(self.parseQuestion())
-                    if self.current_token is None:
-                        break
-                    else:
-                        self.checktype(TokenType.COMMA)
+                    result = self.parseQuestion()
             else:
                 self.raise_error()
 
         return result
 
     def parseGroup(self):
+        point = 0.0
         print('group current token:', self.current_token)
         self.checktype(TokenType.HYPHEN)
         name = self.parseName()
         print('group current token:', name)
         self.checktype(TokenType.COMMA)
+        if self.current_token.value == "P":
+            self.advance()
+            self.checktype(TokenType.HYPHEN)
+            point = self.parseName()
+            self.checktype(TokenType.COMMA)
+        else:
+            self.raise_error()
+
 
         question = []
         while self.current_token is not None:
             if self.current_token.value == "Q":
                 print('group current token:', self.current_token)
                 self.advance()
+                self.checktype(TokenType.HYPHEN)
                 question.append(self.parseQuestion())
             elif self.current_token is None:
                 break
@@ -69,20 +74,28 @@ class Parser:
                         break
         print('end group')
 
-        return Group(name, question)
+        return Group(name, question, point)
 
     def parseQuestion(self):
-        self.checktype(TokenType.HYPHEN)
         name = self.parseName()
         print('current token:', name)
         self.checktype(TokenType.COMMA)
         ques = self.parseName()
         print('current token:', ques)
+        self.checktype(TokenType.COMMA)
         print('question current token:', self.current_token)
         # self.checktype(TokenType.CHAR)
+        random = False
+        if self.current_token.value == "rand":
+            random = True
+        elif self.current_token.value == "norand":
+            random = False
+        else:
+            self.raise_error()
+        self.advance()
         choice = self.parseChoice()
 
-        return Question(name, ques, choice)
+        return Question(name, ques, random, choice)
 
     def parseChoice(self):
         ans = ''

@@ -27,10 +27,12 @@ class Question:
 class Group:
     name: any
     Question: list
+    Point : float()
 
-    def __init__(self, n, q):
+    def __init__(self, n, q, p):
         self.name = n
         self.Question = q
+        self.Point = p
 
     # def __repr__(self):
     #     rep = str(self.name) + ',' + str(self.Question) + ')'
