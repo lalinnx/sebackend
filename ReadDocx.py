@@ -14,11 +14,11 @@ class readDoc:
             if (self.fileType == "docx"):
                 print("this is docx")
                 text = docx2txt.process(BytesIO(self.file.read()))
-                print(text)
+                
                 for x in text.split("\n"):
-                    if x != "":
+                    if x != "" or x != "\n":
                         result = result+x
-
+                print(result)
             elif (self.fileType == "doc"):
                 print("this is doc")
             elif (self.fileType == "pdf"):
