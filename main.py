@@ -21,26 +21,11 @@ prepared_quizQuestion = QuizQuestionObject()
 def questionMethod(q, group_id):
     print(q.name)
     print(q.ques)
-    print("rand: ", q.rand)
     print("Point:", q.point)
 
     ch = q.choice.choice
 
 
-
-    prepared_quizQuestion.addQuizQuestion(
-        question_name="Question" + str(group_id),
-        question_text=q.name,
-        quiz_group_id=group_id,
-        question_type="multiple_choice_question",
-        position=1,
-        points_possible=q.point,
-        correct_comments="",
-        incorrect_comments="",
-        neutral_comments="",
-        text_after_answers="",
-        answers=[]
-    )
 
 for g in tree:
     if type(g) is node.Group:
@@ -51,11 +36,6 @@ for g in tree:
         print("Group:", g.name)
         print("------------------")
         qlist = g.Question
-
-        prepared_quizGroup.addQuizGroup(
-            groupName=g.name,
-            pickCount=len(g.Question),
-        )
 
         for q in qlist:
             questionMethod(q, group_id)
