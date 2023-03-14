@@ -1,1 +1,9 @@
 .vercel
+__pycache__/index.cpython-310.pyc
+.gitignore
+__pycache__/lexer.cpython-310.pyc
+.gitignore
+__pycache__/parser_.cpython-310.pyc
+__pycache__/QuizObject.cpython-310.pyc
+__pycache__/ReadDocx.cpython-310.pyc
+.gitignore
