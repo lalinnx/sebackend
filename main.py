@@ -8,9 +8,9 @@ import sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 lexer1 = Lexer(
-    "G-1,Q-1A,what is dog?,rand[/cat/dog=/you/me]Q-1B,what is cat?,rand[/you/cat/dog=/tiger]end,G-2,Q-2A,meal with?,norand[/dog=/cat/you/tiger]Q-2B,illegel to eat cat?,rand[/no/yes=]end")
+    "G-1,Q-1A,what is dog?[/cat/dog=/you/me]Q-1B,what is cat?[/you/cat/dog=/tiger]end,G-2,Q-2A,meal with?[/dog=/cat/you/tiger]Q-2B,illegel to eat cat?[/no/yes=]end")
 lexer2 = Lexer(
-    "G-1,P-1.5,Q-1A,หมาคือ++-*/%""''$#@!?.{}()_<>=^&|:;\อะไร?,rand[**แมว**หมา=**จิ้งจก**เธอ]Q-1B,แมวคืออะไร?,rand[**เธอ**แมว**หมา=**เสือhiuggu]end,Q-2,P-0.5,เม่นคืออะไร?,rand[**เธอ**แมว**หมา=**เสือ],Q-3,P-2,คนคืออะไร?,rand[**เธอ**แมว**หมา=**เสือ],G-2,P-2,Q-2A,หมาคืออะไร?,rand[**แมว**หมา=**จิ้งจก**เธอ]")
+    "G-1,P-1.5,Q-1A,หมาคือ++-*/%""''$#@!?.{}()_<>=^&|:;\อะไร?[**แมว**หมา=**จิ้งจก**เธอ]Q-1B,แมวคืออะไร?[**เธอ**แมว**หมา=**เสือhiuggu]end,Q-2,P-0.5,เม่นคืออะไร?[**เธอ**แมว**หมา=**เสือ],Q-3,P-2,คนคืออะไร?[**เธอ**แมว**หมา=**เสือ],G-2,P-2,Q-2A,หมาคืออะไร?[**แมว**หมา=**จิ้งจก**เธอ]")
 parser = Parser(lexer2.generate_tokens())
 tree = parser.parse()
 

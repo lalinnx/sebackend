@@ -98,10 +98,6 @@ class Parser:
             self.raise_noPoint_error(str1)
         ques = self.parseName()
         print('current token:', ques)
-        self.checktype(TokenType.COMMA)
-        print('question current token:', self.current_token)
-        # self.checktype(TokenType.CHAR)
-        self.advance()
         choice = self.parseChoice()
 
         return Question(name, ques, choice, point)
