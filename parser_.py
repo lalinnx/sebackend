@@ -120,8 +120,11 @@ class Parser:
                 self.advance()
 
             if self.current_token.type == TokenType.RIGHTSQUARE:
-                self.advance()
-                break
+                if ans == '':
+                    self.raise_error()
+                else:
+                    self.advance()
+                    break
             print('current token::', self.current_token)
 
         print('end choice current token::', self.current_token)
