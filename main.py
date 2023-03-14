@@ -25,14 +25,7 @@ def questionMethod(q, group_id):
     print("Point:", q.point)
 
     ch = q.choice.choice
-    for i in ch:
-        if i == q.choice.Ans:
-            print("answer choice: ", i)
-            prepared_answer.addAnswer(answer_text=i, answer_weight=100)
-        else:
-            print("choice: ", i)
-            prepared_answer.addAnswer(answer_text=i, answer_weight=0)
-    print("------------------")
+
 
 
     prepared_quizQuestion.addQuizQuestion(
@@ -52,7 +45,7 @@ def questionMethod(q, group_id):
 for g in tree:
     if type(g) is node.Group:
         group_id += 1
-        prepared_answer = Answer()
+
 
         print("=====================")
         print("Group:", g.name)
