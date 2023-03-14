@@ -101,17 +101,10 @@ class Parser:
         self.checktype(TokenType.COMMA)
         print('question current token:', self.current_token)
         # self.checktype(TokenType.CHAR)
-        random = False
-        if self.current_token.value == "rand":
-            random = True
-        elif self.current_token.value == "norand":
-            random = False
-        else:
-            self.raise_error()
         self.advance()
         choice = self.parseChoice()
 
-        return Question(name, ques, random, choice, point)
+        return Question(name, ques, choice, point)
 
     def parseChoice(self):
         ans = ''

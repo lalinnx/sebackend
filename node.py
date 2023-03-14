@@ -13,14 +13,12 @@ class Choice(object):
 class Question:
     name: any
     ques: any
-    rand = any
     choice: Choice
     point: float()
 
-    def __init__(self, n, q, r, c, p):
+    def __init__(self, n, q, c, p):
         self.name = n
         self.ques = q
-        self.rand = r
         self.choice = c
         self.point = p
 
