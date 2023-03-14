@@ -64,7 +64,7 @@ def upload_file():
         quizdataTable = db['quizdata']
         file = request.files['files']
         author = request.form['author'].replace(" ", "_")
-        category = request.form['category']
+        title = request.form['title']
         createdate = datetime.today().replace(microsecond=0)
         status = "ready to import"
         fileType = file.filename.split(".")[1]
@@ -72,13 +72,13 @@ def upload_file():
             return 'bad request!', 400
         quiz_text = readDoc(file=file, fileType=fileType).getText()
         quizgroup = parse_quiz(quiz_text=quiz_text)
-        quizdataTable.insert_one({'author': author, 'category': category,
+        quizdataTable.insert_one({'author': author, 'title': title,
                                  'createDate': createdate, 'qData': quizgroup, 'status': status})
 
     except Exception as e:
         return f"Couldn't upload file {e}"
 
-    return make_response(jsonify({'author': author, 'category': category, 'createDate': createdate, 'status': status, 'qData': quizgroup}),200)
+    return make_response(jsonify({'author': author, 'title': title, 'createDate': createdate, 'status': status, 'qData': quizgroup}),200)
 
 
 app.register_error_handler(404, no_page)
