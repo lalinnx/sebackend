@@ -5,12 +5,11 @@ from dataclasses import dataclass
 class TokenType(Enum):
     CHAR = 0
     NUMBER = 1
-    COMMA = 2
-    ASTERISK = 3
-    ANSWER = 4
-    LEFTSQUARE = 5
-    RIGHTSQUARE = 6
-    HYPHEN = 7
+    ASTERISK = 2
+    ANSWER = 3
+    LEFTSQUARE = 4
+    RIGHTSQUARE = 5
+    HYPHEN = 6
 
 
 @dataclass

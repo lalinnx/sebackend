@@ -40,7 +40,7 @@ class Parser:
                 if self.current_token is None:
                     break
                 else:
-                    self.checktype(TokenType.COMMA)
+                    self.checktype(TokenType.ASTERISK)
             else:
                 self.raise_error()
 
@@ -52,13 +52,13 @@ class Parser:
         self.checktype(TokenType.HYPHEN)
         name = self.parseName()
         print('group current token:', name)
-        self.checktype(TokenType.COMMA)
+        self.checktype(TokenType.ASTERISK)
         print('group current token:', self.current_token)
         if self.current_token.value == "P":
             self.advance()
             self.checktype(TokenType.HYPHEN)
             point = self.parseName()
-            self.checktype(TokenType.COMMA)
+            self.checktype(TokenType.ASTERISK)
         else:
             self.raise_error()
 
@@ -75,8 +75,8 @@ class Parser:
                 if x == "end":
                     if self.current_token is None:
                         break
-                    if self.current_token.type == TokenType.COMMA:
-                        self.checktype(TokenType.COMMA)
+                    if self.current_token.type == TokenType.ASTERISK:
+                        self.checktype(TokenType.ASTERISK)
                         break
         print('end group')
 
@@ -86,12 +86,12 @@ class Parser:
         self.checktype(TokenType.HYPHEN)
         name = self.parseName()
         print('current token:', name)
-        self.checktype(TokenType.COMMA)
+        self.checktype(TokenType.ASTERISK)
         if self.current_token.value == "P":
             self.advance()
             self.checktype(TokenType.HYPHEN)
             point = self.parseName()
-            self.checktype(TokenType.COMMA)
+            self.checktype(TokenType.ASTERISK)
         print(float(point))
         if float(point) == 0.0:
             str1 = "No point for question:" + str(name)
@@ -121,7 +121,6 @@ class Parser:
         choice = []
 
         while self.current_token is not TokenType.RIGHTSQUARE:
-            self.checktype(TokenType.ASTERISK)
             self.checktype(TokenType.ASTERISK)
             current_choice = self.parseName()
             choice.append(current_choice)

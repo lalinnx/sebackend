@@ -3,8 +3,8 @@ import re
 
 WHITESPACE = ' \n\t '
 NUMBER = ' 0123456789 '
-CHAR = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz? '
-NAMECHAR = ' +-*/%"$#@!?.{}()_<>=^&|:;\ ' + "'"
+CHAR = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '
+NAMECHAR = ' ,+-*/%"$#@!?.{}()_<>=^&|:;\ ' + "'"
 thai_pattern = re.compile("[\u0E00-\u0E7F]+")
 
 
@@ -28,9 +28,6 @@ class Lexer:
                 yield self.generate_number()
             elif self.current_char in CHAR or thai_pattern.search(self.current_char):
                 yield self.generate_char()
-            elif self.current_char == ',':
-                self.advance()
-                yield Token(TokenType.COMMA)
             elif self.current_char == '*':
                 self.advance()
                 yield Token(TokenType.ASTERISK)
