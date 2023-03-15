@@ -80,7 +80,7 @@ class Parser:
                         break
         print('end group')
 
-        return Group(name, question)
+        return Group(name, question,point)
 
     def parseQuestion(self, point):
         self.checktype(TokenType.HYPHEN)
@@ -98,6 +98,17 @@ class Parser:
             self.raise_noPoint_error(str1)
         ques = self.parseName()
         print('current token:', ques)
+        # self.checktype(TokenType.COMMA)
+        print('question current token:', self.current_token)
+        # self.checktype(TokenType.CHAR)
+        # random = False
+        # if self.current_token.value == "rand":
+        #     random = True
+        # elif self.current_token.value == "norand":
+        #     random = False
+        # else:
+        #     self.raise_error()
+        # self.advance()
         choice = self.parseChoice()
 
         return Question(name, ques, choice, point)
@@ -120,11 +131,8 @@ class Parser:
                 self.advance()
 
             if self.current_token.type == TokenType.RIGHTSQUARE:
-                if ans == '':
-                    self.raise_error()
-                else:
-                    self.advance()
-                    break
+                self.advance()
+                break
             print('current token::', self.current_token)
 
         print('end choice current token::', self.current_token)
