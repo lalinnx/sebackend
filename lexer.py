@@ -4,7 +4,7 @@ import re
 WHITESPACE = ' \n\t '
 NUMBER = ' 0123456789 '
 CHAR = ' ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '
-NAMECHAR = ' ,+-*/%"$#@!?.{}()_<>=^&|:;\ ' + "'"
+NAMECHAR = ' ,+/%"$#@!?.{}()_<>^&|:;\ ' + "'"
 thai_pattern = re.compile("[\u0E00-\u0E7F]+")
 
 
