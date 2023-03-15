@@ -35,7 +35,6 @@ for g in tree:
     if type(g) is node.Group:
         group_id += 1
 
-
         print("=====================")
         print("Group:", g.name,g.point)
         print("------------------")
