@@ -39,8 +39,6 @@ class Parser:
                 result.append(self.parseQuestion(0))
                 if self.current_token is None:
                     break
-                else:
-                    self.checktype(TokenType.ASTERISK)
             else:
                 self.raise_error()
 
