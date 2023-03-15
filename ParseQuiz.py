@@ -63,6 +63,10 @@ def parse_quiz(quiz_text):
                         preparedQuizQuestion[f'question[answers][{count}][answer_text]'] = choice
                         preparedQuizQuestion[f'question[answers][{count}][answer_weight]'] = 0
                     count += 1
+                # Add the quiz question object to the prepared_quizQuestion
+                quiz_question.addQuizQuestion(
+                    preparedQuizQuestion=preparedQuizQuestion
+                )
 
                
         else:
@@ -73,11 +77,12 @@ def parse_quiz(quiz_text):
             preparedQuizQuestion['question[question_name]'] = parse_q.name
             # The text of the question.
             preparedQuizQuestion['question[question_text]'] = parse_q.ques
+            preparedQuizQuestion['question[question_type]'] = 'multiple_choice_question'
             # The maximum amount of points possible received for getting this question correct.
             preparedQuizQuestion['question[points_possible]'] = int(float(parse_q.point))
             for choice in choices:
                     
-                    if choice == question.choice.Ans:
+                    if choice == parse_q.choice.Ans:
                         print("answer choice: ", choice)
                         preparedQuizQuestion[f'question[answers][{count}][answer_text]'] = choice
                         preparedQuizQuestion[f'question[answers][{count}][answer_weight]'] = 100
@@ -86,10 +91,12 @@ def parse_quiz(quiz_text):
                         preparedQuizQuestion[f'question[answers][{count}][answer_text]'] = choice
                         preparedQuizQuestion[f'question[answers][{count}][answer_weight]'] = 0
                     count += 1
-        # Add the quiz question object to the prepared_quizQuestion
-        quiz_question.addQuizQuestion(
+                    
+            # Add the quiz question object to the prepared_quizQuestion
+            quiz_question.addQuizQuestion(
                     preparedQuizQuestion=preparedQuizQuestion
                 )
+        
 
 
     return {"quiz_groups": quiz_group.getQuizGroup(), "quiz_questions": quiz_question.getQuizQuestion()}

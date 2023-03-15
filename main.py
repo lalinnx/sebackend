@@ -1,3 +1,4 @@
+from ParseQuiz import parse_quiz
 import node
 from lexer import Lexer
 from parser_ import Parser
@@ -10,7 +11,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 lexer1 = Lexer(
     "G-1,Q-1A,what is dog?[/cat/dog=/you/me]Q-1B,what is cat?[/you/cat/dog=/tiger]end,G-2,Q-2A,meal with?[/dog=/cat/you/tiger]Q-2B,illegel to eat cat?[/no/yes=]end")
 lexer2 = Lexer(
-    "G-1*P-1*Q-1A* ข้อใดไม่ใช้ซอฟต์แวร์ประสงค์ร้าย?[*Redhat=*Virus*Trojan*Security Killer]Q-1B*Software ประสงค์ร้าย ข้อใดไม่ถูกต้อง?[*Virus,www=* Keylogger , Security killer* Spyware , Ransomware* Virus , Trojan]end,G-2* P-2*Q-2A* Malwareที่สามารถขยายตัวเพื่อกินพื้นที่บนอุปกรณ์ทําให้พื้นที่เต็มคืออะไร?[*Worms=*Virus* Security  Killer* Ransomware]Q-2B*ข้อใดต่อไปนีโดนซอฟเเวร์ประสงค์ร้ายเเบบ Spyware?[*จอยโดนเก็บข้อมูลส่วนตัวส่งไปให้เเฮกเกอร์=*จินโดนบันทึกการกดเเป้นพิม*เเจคสันคอมของเค้าโดนทําลายระบบป้องกัน*จินยองคอมของเค้าโดนไวรัส]end")
+    "Q-1A* P-1.5*ข้อใดไม่ใช้ซอฟต์แวร์ประสงค์ร้าย?[*Redhat=*Virus*Trojan*Security Killer]Q-1B*P-5*Software ประสงค์ร้าย ข้อใดไม่ถูกต้อง?[*Virus,www=* Keylogger , Security killer* Spyware , Ransomware* Virus , Trojan]G-2*P-2*Q-2A*Malwareที่สามารถขยายตัวเพื่อกินพื้นที่บนอุปกรณ์ทําให้พื้นที่เต็มคืออะไร?[*Worms=*Virus* Security  Killer* Ransomware]Q-2B*ข้อใดต่อไปนีโดนซอฟเเวร์ประสงค์ร้ายเเบบ Spyware?[*จอยโดนเก็บข้อมูลส่วนตัวส่งไปให้เเฮกเกอร์=*จินโดนบันทึกการกดเเป้นพิม*เเจคสันคอมของเค้าโดนทําลายระบบป้องกัน*จินยองคอมของเค้าโดนไวรัส]end")
 parser = Parser(lexer2.generate_tokens())
 tree = parser.parse()
 
@@ -52,3 +53,4 @@ for i in prepared_quizGroup.getQuizGroup():
 for i in prepared_quizQuestion.getQuizQuestion():
     print(i)
 
+parse_quiz("Q-1A* P-1.5*ข้อใดไม่ใช้ซอฟต์แวร์ประสงค์ร้าย?[*Redhat=*Virus*Trojan*Security Killer]Q-1B*P-5*Software ประสงค์ร้าย ข้อใดไม่ถูกต้อง?[*Virus,www=* Keylogger , Security killer* Spyware , Ransomware* Virus , Trojan]G-2*P-2*Q-2A*Malwareที่สามารถขยายตัวเพื่อกินพื้นที่บนอุปกรณ์ทําให้พื้นที่เต็มคืออะไร?[*Worms=*Virus* Security  Killer* Ransomware]Q-2B*ข้อใดต่อไปนีโดนซอฟเเวร์ประสงค์ร้ายเเบบ Spyware?[*จอยโดนเก็บข้อมูลส่วนตัวส่งไปให้เเฮกเกอร์=*จินโดนบันทึกการกดเเป้นพิม*เเจคสันคอมของเค้าโดนทําลายระบบป้องกัน*จินยองคอมของเค้าโดนไวรัส]end")
