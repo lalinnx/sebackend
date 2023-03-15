@@ -28,7 +28,7 @@ def parse_quiz(quiz_text):
             quiz_group.addQuizGroup(
                 groupName=parse_q.name,
                 pickCount=len(question_list),
-                questionPoints=parse_q.point
+                questionPoints=int(float(parse_q.point))
             )
 
             # Loop through each question in the group
@@ -74,7 +74,7 @@ def parse_quiz(quiz_text):
             # The text of the question.
             preparedQuizQuestion['question[question_text]'] = parse_q.ques
             # The maximum amount of points possible received for getting this question correct.
-            preparedQuizQuestion['question[points_possible]'] = parse_q.point
+            preparedQuizQuestion['question[points_possible]'] = int(float(parse_q.point))
             for choice in choices:
                     
                     if choice == question.choice.Ans:

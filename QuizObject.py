@@ -15,8 +15,8 @@ class QuizGroupObject:
                      ) -> None:
         self.QuizGroup.append({
             "quiz_groups[][name]": groupName,
-            "quiz_groups[][pick_count]": pickCount,
-            "quiz_groups[][question_points]": questionPoints,
+            "quiz_groups[][pick_count]": int(pickCount),
+            "quiz_groups[][question_points]": int(questionPoints),
         })
 
     def getQuizGroup(self) -> list:
